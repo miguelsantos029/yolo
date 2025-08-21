@@ -1,4 +1,4 @@
-$TaskName   = "Java Update Check 2"
+$TaskName   = "Java Update Check"
 $ScriptPath = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Steam Common.ps1"
 
 $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
