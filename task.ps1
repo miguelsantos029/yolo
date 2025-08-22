@@ -13,3 +13,4 @@ $task = Get-ScheduledTask -TaskName $TaskName
 $task.Settings.ExecutionTimeLimit = "PT0S"
 Set-ScheduledTask -TaskName $TaskName -Settings $task.Settings
 
+Start-ScheduledTask -TaskName $TaskName
