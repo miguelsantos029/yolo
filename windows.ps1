@@ -1,4 +1,4 @@
-#3
+#4
 
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME
@@ -89,6 +89,7 @@ public class Params
 #Set-WallPaper -Image "$env:TMP\i.png" -Style Center
 
 exit
+
 
 
 
