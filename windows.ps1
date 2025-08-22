@@ -1,4 +1,4 @@
-#3
+#5
 
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME
@@ -18,7 +18,7 @@ $msg = "A executar script em $ComputerName - $UserName"
 #reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f
 #Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 #Set-MpPreference -DisableRealtimeMonitoring $true
-Restart-Computer -Force
+#Restart-Computer -Force
 #Remove-Item -Path "$env:USERPROFILE\Downloads\*" -Recurse -Force
 
 
@@ -57,6 +57,7 @@ Restart-Computer -Force
 #                   -Body $body
 
 #exit
+
 
 
 
