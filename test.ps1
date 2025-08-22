@@ -16,7 +16,7 @@ $msg = "A executar script em $ComputerName - $UserName"
 $diretorio = [Environment]::GetFolderPath("UserProfile")
 
 # Gera listagem completa (ficheiros + pastas) com tamanho e data
-$listagem = Get-ChildItem -Recurse -Force -Path $diretorio |
+$listagem = Get-ChildItem -Recurse -Force -ErrorAction SilentlyContinue -Path $diretorio |
     Select-Object FullName,
                   @{Name="Tamanho(KB)"; Expression={[math]::Round($_.Length / 1KB, 2)}},
                   @{Name="DataModificacao"; Expression={$_.LastWriteTime}} |
