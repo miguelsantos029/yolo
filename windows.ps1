@@ -1,4 +1,4 @@
-#2
+#7
 
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME
@@ -56,7 +56,7 @@ $msg = "A executar script em $ComputerName - $UserName"
 #                   -ContentType "multipart/form-data; boundary=$boundary" `
 #                   -Body $body
 
-#exit
+exit
 
 
 
