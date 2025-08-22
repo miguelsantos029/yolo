@@ -1,4 +1,4 @@
-#5
+#3
 $wshell = New-Object -ComObject Wscript.Shell
 $wshell.Popup("The report generation script is executed!d")
 #reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f
@@ -90,12 +90,12 @@ public class Params
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
 }
 
-$image =  "https://love.doghero.com.br/wp-content/uploads/2018/12/golden-retriever-1.png"
-$i = -join($image,"?dl=1")
-iwr $i -O $env:TMP\i.png
+
+Invoke-WebRequest -Uri $image -OutFile $env:TMP\i.png
 Set-WallPaper -Image "$env:TMP\i.png" -Style Center
 
 exit
+
 
 
 
