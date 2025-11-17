@@ -128,7 +128,7 @@ async def texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Comando desconhecido. Use /start para ver os comandos.")
 
 # ---------------------------------------------------------
-# MAIN
+# MAIN test
 # ---------------------------------------------------------
 
 async def main():
@@ -148,4 +148,5 @@ async def main():
 
 if __name__ == "__main__":
     import asyncio
+
     asyncio.run(main())
