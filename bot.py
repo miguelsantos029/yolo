@@ -86,6 +86,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/logs\n"
         "/reiniciar\n"
         "/limpeza\n"
+        "/test\n"
     )
 
 async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
@@ -150,3 +151,4 @@ if __name__ == "__main__":
     import asyncio
 
     asyncio.run(main())
+
