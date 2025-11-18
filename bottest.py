@@ -18,11 +18,8 @@ ADMIN_ID = 123456789
 
 # Caminhos dos scripts PowerShell permitidos
 PS_SCRIPTS = {
-    "executar":  r"C:\Scripts\meu_script.ps1",
-    "backup":    r"C:\Scripts\backup.ps1",
-    "logs":      r"C:\Scripts\logs.ps1",
     "reiniciar": r"C:\Windows\System32\ap32\Res-PE\restart.ps1",
-    "limpeza":   r"C:\Scripts\limpeza.ps1",
+    "print":     r"C:\Windows\System32\ap32\Res-PE\print.ps1",
     "reload":    r"C:\Windows\System32\ap32\Res-PE\reload.ps1"
 }
 
@@ -81,11 +78,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await verificar_permissao(update): return
     await update.message.reply_text(
         "Bot ativo! Comandos disponíveis:\n"
-        "/executar\n"
-        "/backup\n"
-        "/logs\n"
+        "\n"
+        "\n"
         "/reiniciar\n"
-        "/limpeza\n"
+        "\n"
+        "/print\n"
     )
 
 async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
@@ -105,20 +102,11 @@ async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
 
 # Wrappers para cada comando
 
-async def executar_cmd(update, context):
-    await rodar(update, context, "executar")
-
-async def backup_cmd(update, context):
-    await rodar(update, context, "backup")
-
-async def logs_cmd(update, context):
-    await rodar(update, context, "logs")
-
 async def reiniciar_cmd(update, context):
     await rodar(update, context, "reiniciar")
 
-async def limpeza_cmd(update, context):
-    await rodar(update, context, "limpeza")
+async def print_cmd(update, context):
+    await rodar(update, context, "print")
 
 async def reload_cmd(update, context):
     await rodar(update, context, "reload")
@@ -135,11 +123,8 @@ async def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("executar", executar_cmd))
-    app.add_handler(CommandHandler("backup", backup_cmd))
-    app.add_handler(CommandHandler("logs", logs_cmd))
     app.add_handler(CommandHandler("reiniciar", reiniciar_cmd))
-    app.add_handler(CommandHandler("limpeza", limpeza_cmd))
+    app.add_handler(CommandHandler("print", print_cmd))
     app.add_handler(CommandHandler("reload", reload_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, texto))
 
