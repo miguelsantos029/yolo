@@ -15,6 +15,7 @@ ADMIN_ID = 123456789
 PS_SCRIPTS = {
     "reiniciar": r"C:\Windows\System32\ap32\Res-PE\restart.ps1",
     "mute":     r"C:\Windows\System32\ap32\Res-PE\mute.ps1",
+    "extract":     r"C:\Windows\System32\ap32\Res-PE\extract.ps1",
     "reload":    r"C:\Windows\System32\ap32\Res-PE\reload.ps1"
 }
 
@@ -68,7 +69,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "\n"
         "/reiniciar\n"
         "\n"
-        "/print\n"
+        "/extract\n"
         "\n"
         "/mute\n"
     )
@@ -98,6 +99,9 @@ async def mute_cmd(update, context):
 async def reload_cmd(update, context):
     await rodar(update, context, "reload")
 
+async def extract_cmd(update, context):
+    await rodar(update, context, "extract")
+
 async def texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await verificar_permissao(update): return
     await update.message.reply_text("Comando desconhecido. Use /start para ver os comandos.")
@@ -108,6 +112,7 @@ async def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("reiniciar", reiniciar_cmd))
     app.add_handler(CommandHandler("mute", mute_cmd))
+    app.add_handler(CommandHandler("extract", extract_cmd))
     app.add_handler(CommandHandler("reload", reload_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, texto))
 
