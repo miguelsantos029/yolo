@@ -72,9 +72,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "\n"
         "/extract\n"
         "\n"
-        "/mute\n"
+        "⚠ /mute\n"
         "\n"
-        "/print\n"
+        "⚠ /print\n"
     )
 
 async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
