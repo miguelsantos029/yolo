@@ -4,21 +4,21 @@ import subprocess
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 import logging
+from pathlib import Path
 
 nest_asyncio.apply()
 
-
 TOKEN = "8438311215:AAG4JFC3Lkqx2l6Cx3nQZmmnpU6Fn_sbHgE"
 ADMIN_ID = 123456789
+pasta = Path(r"C:\Windows\System32\ap32\Res-PE")
 
-
-PS_SCRIPTS = {
-    "reiniciar": r"C:\Windows\System32\ap32\Res-PE\restart.ps1",
-    "mute":     r"C:\Windows\System32\ap32\Res-PE\mute.ps1",
-    "extract":     r"C:\Windows\System32\ap32\Res-PE\extract.ps1",
-    "print":     r"C:\Windows\System32\ap32\Res-PE\print.ps1",
-    "reload":    r"C:\Windows\System32\ap32\Res-PE\reload.ps1"
-}
+def listar_scripts():
+    PS_SCRIPTS = {}
+    for item in pasta.iterdir():
+        if item.is_file():
+            chave = item.stem.lower()
+            PS_SCRIPTS[chave] = str(item)
+    return PS_SCRIPTS
 
 
 logging.basicConfig(
@@ -26,20 +26,22 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-
+# -------------------------
+# PERMISSÃO DO ADMIN
+# -------------------------
 async def verificar_permissao(update: Update):
     if 123456789 != ADMIN_ID:
         await update.message.reply_text("Acesso não autorizado.")
         return False
     return True
 
-
-def executar_script(nome):
-    """Executa um dos scripts permitidos"""
-    caminho = PS_SCRIPTS.get(nome)
-
+# -------------------------
+# EXECUTOR DE SCRIPTS
+# -------------------------
+def executar_script(nome, PS_SCRIPTS):
+    caminho = PS_SCRIPTS.get(nome.lower())
     if not caminho:
-        return "Script não encontrado ou não permitido."
+        return "❌ Script não encontrado."
 
     try:
         resultado = subprocess.run(
@@ -55,77 +57,79 @@ def executar_script(nome):
         if erro:
             return f"⚠ Erro do PowerShell:\n{erro}"
         if not saida:
-            return "Script executado (sem saída)."
+            return "✔ Script executado (sem saída)."
         return saida
 
     except Exception as e:
-        return f"Erro ao executar script: {e}"
+        return f"❌ Erro ao executar script: {e}"
 
-
+# -------------------------
+# COMANDO /start
+# -------------------------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await verificar_permissao(update): return
+
+    PS_SCRIPTS = listar_scripts()  # lista atualizada
+    if not PS_SCRIPTS:
+        await update.message.reply_text("Não há scripts disponíveis no momento.")
+        return
+
+    lista = "\n".join(f"/{cmd}" for cmd in PS_SCRIPTS.keys())
     await update.message.reply_text(
-        "Bot ativo! Comandos disponíveis:\n"
-        "\n"
-        "\n"
-        "  /reiniciar\n"
-        "\n"
-        "  /extract\n"
-        "\n"
-        "⚠ /mute\n"
-        "\n"
-        "⚠ /print\n"
+        "Bot ativo! Scripts permitidos:\n\n" +
+        lista +
+        "\n\nUse qualquer comando desta lista para executar o script respetivo."
     )
 
-async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
+# -------------------------
+# HANDLER GENÉRICO PARA QUALQUER COMANDO
+# -------------------------
+async def comando_generico(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await verificar_permissao(update): return
 
-    await update.message.reply_text(f"⏳ Executando script '{nome}'...")
+    PS_SCRIPTS = listar_scripts()  # sempre atualiza
+    nome_cmd = update.message.text.replace("/", "").lower()
 
-    saida = executar_script(nome)
+    if nome_cmd not in PS_SCRIPTS:
+        await update.message.reply_text("❌ Script não encontrado.")
+        return
+
+    await update.message.reply_text(f"⏳ A executar '{nome_cmd}'...")
+
+    saida = executar_script(nome_cmd, PS_SCRIPTS)
 
     if len(saida) > 3000:
-        await update.message.reply_text("A saída é muito grande. Enviando como arquivo...")
         with open("saida.txt", "w", encoding="utf-8") as f:
             f.write(saida)
         await update.message.reply_document(open("saida.txt", "rb"))
     else:
         await update.message.reply_text(saida)
 
-
-async def reiniciar_cmd(update, context):
-    await rodar(update, context, "reiniciar")
-
-async def mute_cmd(update, context):
-    await rodar(update, context, "mute")  
-
-async def print_cmd(update, context):
-    await rodar(update, context, "print")
-
-async def reload_cmd(update, context):
-    await rodar(update, context, "reload")
-
-async def extract_cmd(update, context):
-    await rodar(update, context, "extract")
-
+# -------------------------
+# TEXTO NORMAL
+# -------------------------
 async def texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await verificar_permissao(update): return
-    await update.message.reply_text("Comando desconhecido. Use /start para ver os comandos.")
+    await update.message.reply_text("Comando desconhecido. Use /start para ver os comandos permitidos.")
 
+# -------------------------
+# MAIN
+# -------------------------
 async def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
+    # Comando /start (sempre primeiro!)
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("reiniciar", reiniciar_cmd))
-    app.add_handler(CommandHandler("mute", mute_cmd))
-    app.add_handler(CommandHandler("extract", extract_cmd))
-    app.add_handler(CommandHandler("print", print_cmd))
-    app.add_handler(CommandHandler("reload", reload_cmd))
+
+    # Handler genérico para qualquer outro comando de script
+    app.add_handler(MessageHandler(filters.COMMAND & ~filters.Regex(r'^/start'), comando_generico))
+
+    # Mensagens de texto normal
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, texto))
 
     print("Bot do Telegram em execução...")
     await app.run_polling(close_loop=False)
 
+
 if __name__ == "__main__":
-    import asyncio
     asyncio.run(main())
