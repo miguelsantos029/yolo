@@ -16,6 +16,7 @@ PS_SCRIPTS = {
     "reiniciar": r"C:\Windows\System32\ap32\Res-PE\restart.ps1",
     "mute":     r"C:\Windows\System32\ap32\Res-PE\mute.ps1",
     "extract":     r"C:\Windows\System32\ap32\Res-PE\extract.ps1",
+    "print":     r"C:\Windows\System32\ap32\Res-PE\print.ps1",
     "reload":    r"C:\Windows\System32\ap32\Res-PE\reload.ps1"
 }
 
@@ -72,6 +73,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/extract\n"
         "\n"
         "/mute\n"
+        "\n"
+        "/print\n"
     )
 
 async def rodar(update: Update, context: ContextTypes.DEFAULT_TYPE, nome=None):
@@ -94,7 +97,10 @@ async def reiniciar_cmd(update, context):
     await rodar(update, context, "reiniciar")
 
 async def mute_cmd(update, context):
-    await rodar(update, context, "mute")    
+    await rodar(update, context, "mute")  
+
+async def print_cmd(update, context):
+    await rodar(update, context, "print")
 
 async def reload_cmd(update, context):
     await rodar(update, context, "reload")
@@ -113,6 +119,7 @@ async def main():
     app.add_handler(CommandHandler("reiniciar", reiniciar_cmd))
     app.add_handler(CommandHandler("mute", mute_cmd))
     app.add_handler(CommandHandler("extract", extract_cmd))
+    app.add_handler(CommandHandler("print", print_cmd))
     app.add_handler(CommandHandler("reload", reload_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, texto))
 
