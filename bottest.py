@@ -55,7 +55,7 @@ def executar_script(nome):
             ["powershell.exe", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-File", caminho],
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=600
         )
 
         saida = resultado.stdout.strip()
@@ -134,3 +134,4 @@ async def main():
 if __name__ == "__main__":
     import asyncio
     asyncio.run(main())
+
