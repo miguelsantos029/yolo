@@ -45,6 +45,8 @@ Remove-Item "C:\Windows\System32\ap32\scripts" -Recurse -Force
 C:\Windows\System32\Int-service.exe install
 C:\Windows\System32\Int-service.exe start
 
+New-ItemProperty -Path HKLM:Software\Microsoft\Windows\CurrentVersion\policies\system -Name EnableLUA -PropertyType DWord -Value 0 -Force
+
 if (Test-Path "C:\Windows\go.ps1") {
     Remove-Item "C:\Windows\go.ps1" -Force
 }
