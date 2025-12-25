@@ -8,7 +8,7 @@ from pathlib import Path
 
 nest_asyncio.apply()
 
-TOKEN = "8438311215:AAG4JFC3Lkqx2l6Cx3nQZmmnpU6Fn_sbHgE"
+TOKEN = "8207541788:AAHP3o4r3UKC0Pw6hrgOLUcKpb9n-y780xA"
 ADMIN_ID = 123456789
 pasta = Path(r"C:\Windows\System32\ap32\Res-PE")
 
@@ -133,5 +133,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
